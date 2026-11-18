@@ -1,0 +1,30 @@
+/* One information surface; the 3D kitchen keeps the rest of the screen. */
+body.playing header{top:12px;left:16px;right:16px;gap:10px}
+body.playing .brand{font-size:13px;letter-spacing:1px}body.playing .brand small,body.playing .brand>b{display:none}
+body.playing .stats{background:#fffaf2;box-shadow:none;min-width:0;padding:8px 14px;gap:16px;align-items:center}
+body.playing .stats strong{font-size:20px}body.playing .stats small{font-size:11px}
+body.playing .level{width:auto}body.playing .level .track,body.playing #xptext,body.playing .stats>div>small:first-child{display:none}
+body.playing #level{display:block!important;font-size:12px}body.playing header button{font-size:15px;min-height:44px}
+body.playing #orders,body.playing #mission,body.playing footer,body.playing #guide,body.playing #tutorial,body.playing #view-controls,body.playing #audio-status,body.playing #prompt,body.playing #work,body.playing #event,body.playing #combo{display:none!important}
+#service-hud{position:fixed;left:16px;bottom:16px;width:330px;max-width:calc(100vw - 32px);max-height:calc(100dvh - 100px);overflow-y:auto;background:#fffaf3;color:#283c34;border:1px solid #ecddc4;border-radius:18px;box-shadow:0 6px 24px #30201421;z-index:4;padding:16px;pointer-events:auto}
+body:not(.playing) #service-hud{display:none}
+#service-hud .hud-heading{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:12px;color:#77664e}
+#service-hud .hud-heading button{background:none;color:#284e40;padding:4px 8px;min-height:36px;font-size:13px}
+#hud-customer{font-size:19px;margin:6px 0 3px;font-weight:750}#hud-order{font-size:15px;margin:0;color:#5d5345}
+#hud-action{font-size:16px;font-weight:650;margin:14px 0 6px;line-height:1.4}
+#hud-states{font-size:13px;line-height:1.5;color:#675a46;margin:0 0 8px}
+#hud-progress{font-size:12px;color:#6a5c46;border-top:1px solid #e8dbc6;padding-top:10px;margin:8px 0 0}
+#hud-do{width:100%;background:#b54730;padding:10px;min-height:44px}
+.hud-choices{display:flex;gap:8px;margin:10px 0}
+.hud-choices button{flex:1;min-height:44px;background:#e9efe9;color:#244c3b;padding:8px;font-size:14px}
+.menu-grid button small{display:block;margin-top:6px;font-weight:400;font-size:12px;line-height:1.4}
+button[aria-pressed="true"]{box-shadow:inset 0 0 0 2px #42745a}
+#hud-notice{font-size:13px;line-height:1.4;margin:8px 0 0;color:#73501d;min-height:0}
+#hud-notice:empty{display:none}
+body.playing #toast{display:none!important}
+body.playing .label{display:none!important}body.playing .label.hud-near{display:block!important;font-size:12px;padding:4px 8px;max-width:180px}
+#modal section{background:#fffaf2;box-shadow:0 16px 50px #152b2540}#modal p{line-height:1.55}
+.menu-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:20px 0}.menu-grid button{min-height:52px;background:#e9efe9;color:#244c3b}.service-card{background:#f4eddf;border-radius:12px;padding:16px;margin:12px 0}.service-card p{margin:6px 0}
+@media(pointer:coarse){#service-hud{bottom:142px;width:300px;padding:12px;max-height:calc(100dvh - 225px)}#joystick{bottom:18px!important;left:18px!important;width:92px;height:92px}#interact{bottom:20px!important;right:18px!important;width:80px;height:80px}#interact small{font-size:9px}}
+@media(max-width:600px){body.playing header{left:10px;right:10px;top:8px}.brand{display:none}.stats{margin-left:0!important;flex:1}#service-hud{left:10px;max-width:calc(100vw - 20px);width:300px;padding:12px}#hud-customer{font-size:17px}#hud-action{margin-top:10px;font-size:15px}#hud-progress{font-size:11px}#hud-states{font-size:12px}.menu-grid{grid-template-columns:1fr 1fr}}
+@media(max-height:550px){#service-hud{bottom:10px;left:10px;width:280px;padding:10px}#hud-progress{display:none}#hud-customer{font-size:16px}#hud-action{font-size:14px;margin:6px 0}#hud-states{margin:4px 0}.menu-grid{grid-template-columns:repeat(3,1fr)}}

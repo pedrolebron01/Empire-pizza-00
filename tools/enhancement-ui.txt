@@ -1,0 +1,54 @@
+function initEnhancements(){
+  ensureDaily(state);
+  const guide=document.createElement('div');guide.id='guide';guide.innerHTML='<small>PRÓXIMO PASSO</small><strong id="guide-title"></strong><span id="guide-detail"></span>';document.body.append(guide);
+  const progress=document.createElement('div');progress.id='next-unlock';$('#mission').append(progress);
+  const controls=document.createElement('div');controls.id='view-controls';controls.innerHTML='<button id="zoom-out" aria-label="Afastar câmera">−</button><span>Câmera</span><button id="zoom-in" aria-label="Aproximar câmera">+</button><button id="help-game">Como jogar</button>';document.body.append(controls);
+  const badge=document.createElement('button');badge.id='audio-status';badge.onclick=showPause;document.body.append(badge);
+  $('#zoom-in').onclick=()=>changeZoom(.1);$('#zoom-out').onclick=()=>changeZoom(-.1);$('#help-game').onclick=showHelp;
+  addEventListener('pointerdown',()=>{music.unlock();},{capture:true});
+  addEventListener('keydown',()=>{music.unlock();},{capture:true});
+  document.addEventListener('visibilitychange',()=>music.setScene({rush,paused,hidden:document.hidden}));
+  guideRing=mesh(new T.TorusGeometry(.48,.055,8,40),0xf6b83e,0,.06,0);guideRing.rotation.x=Math.PI/2;guideRing.visible=false;
+  for(const x of [-5,1,6]){cyl(.035,.6,0x53432d,x,3.3,-2);const shade=mesh(new T.ConeGeometry(.4,.3,20,1,true),0x497362,x,2.88,-2);const bulb=sphere(.13,0xffe3a0,x,2.8,-2);bulb.material=new T.MeshStandardMaterial({color:0xffe2a0,emissive:0xffb554,emissiveIntensity:.8});}
+  updateEnhancementUI();
+}
+function changeZoom(amount){state.cameraZoom=Math.max(.8,Math.min(1.5,Math.round((state.cameraZoom+amount)*100)/100));save();}
+function showHelp(){showModal(`<span class="eyebrow">SEU GUIA RÁPIDO</span><h2>Uma pizza, quatro passos.</h2><div class="help-steps"><p><b>1 · Massa</b> Vá ao círculo dourado e aperte E para pegar uma massa.</p><p><b>2 · Preparo</b> Na bancada, escolha a receita da comanda. Aguarde a montagem.</p><p><b>3 · Forno</b> Aperte E para colocar. Quando ouvir o aviso, aperte E para retirar.</p><p><b>4 · Balcão</b> Aperte E e escolha Entregar comanda. Também é possível guardar e pegar pizzas.</p></div><p>Selecione uma comanda à esquerda. O quadro “Próximo passo” e o círculo dourado ajudam a encontrar a estação. WASD ou setas movem, Shift corre e Esc pausa.</p><p>Use + e − para aproximar a câmera. Em Configurações, música e efeitos têm volume e silêncio separados.</p><button id="help-back">Entendi, vamos cozinhar!</button>`);$('#help-back').onclick=closeModal;}
+function dailyMarkup(){const d=ensureDaily(state);return '<h3>Metas de hoje</h3><p>Recompensas automáticas, uma vez por dia. Seu avanço fica salvo.</p>'+DAILY_GOALS.map((g,i)=>`<div class="card daily"><b>${d.claimed.includes(i)?'✓ ':''}${g.title}</b><p>${g.desc} ${Math.min(g.goal,d[g.key])}/${g.goal}</p><small>+R$ ${g.money} · +${g.xp} XP ${d.claimed.includes(i)?'· RECEBIDOS':''}</small></div>`).join('');}
+function updateEnhancementUI(){
+  if(!$('#guide'))return;
+  const next=nearestUnlock(state),d=ensureDaily(state),goal=DAILY_GOALS.find((g,i)=>!d.claimed.includes(i));
+  $('#next-unlock').innerHTML=`<small>LOGO ALI</small><p>${next.recipe}</p><p>${next.upgrade}</p><p>${next.expansion}</p><small>META DE HOJE</small><p>${goal?goal.desc+' '+Math.min(goal.goal,d[goal.key])+'/'+goal.goal:'✓ Todas as metas de hoje concluídas!'}</p>`;
+  const mutedMusic=state.musicMuted||state.musicVolume===0,mutedEffects=state.sfxMuted||state.sfxVolume===0;
+  $('#audio-status').textContent=mutedMusic?'Música silenciada':mutedEffects?'Efeitos silenciados':'♫ Som e música';
+  $('#audio-status').title='Abrir configurações de música e efeitos';
+  $('#zoom-in').disabled=state.cameraZoom>=1.5;$('#zoom-out').disabled=state.cameraZoom<=.8;
+  const c=customers.find(c=>c.id===selected&&c.status!=='exit');
+  let station='dough',title='01 · Pegue uma massa',detail='Aproxime-se da estação iluminada e aperte E.';
+  const matching=hand.find(p=>p.recipe===c?.recipe),p=matching||hand[heldIndex]||hand[0];
+  if(work){station='bench';title='Montando sua pizza…';detail='Um instante: o molho e os ingredientes estão sendo adicionados.';}
+  else if(ovens.some(p=>p.stage==='ready')&&hand.length>=1+state.upgrades.tray){station='counter';title='Libere espaço na bandeja';detail='E no balcão → Guardar pizza da mão. Depois retire a pizza do forno.';}
+  else if(ovens.some(p=>p.stage==='ready')){station='oven';title='Sua pizza está pronta!';detail='Aperte E junto ao forno para retirar antes de passar do ponto.';}
+  else if(p?.stage==='dough'){station='bench';title='02 · Monte a receita';detail=c?'E na bancada → '+RECIPES[c.recipe].name:'Abra a bancada com E e escolha uma receita.';}
+  else if(p?.stage==='raw'){station='oven';title='03 · Leve ao forno';detail='Aperte E perto do forno para assar '+RECIPES[p.recipe].name+'.';}
+  else if(p?.stage==='ready'){station='counter';title='04 · Entregue ou guarde';detail='E no balcão → Entregar comanda ou Guardar pizza da mão.';}
+  else if(c&&findReadyPizza(shelf,c.recipe)){station='counter';title='A comanda já está no balcão';detail='E no balcão → Entregar comanda #'+c.id+'.';}
+  else if(ovens.length){station='oven';title='Assando… '+Math.max(0,Math.ceil(ovens[0].duration-ovens[0].elapsed))+' s';detail='Espere o aviso do forno. Você também pode preparar o próximo pedido.';}
+  else if(!c){title='Sua pizzaria está aberta';detail='Prepare uma massa enquanto espera o próximo cliente.';}
+  $('#guide-title').textContent=title;$('#guide-detail').textContent=detail;
+  if(guideRing){guideRing.visible=started;guideRing.position.set(points[station].x,.065,points[station].z);}
+}
+function updateEvent(){
+  const ev=eventAt(time);
+  if(currentEvent!==ev.id){currentEvent=ev.id;eventServed=0;eventRecipes.clear();eventPaid=false;eventWarned=false;eventStarted=false;}
+  rush=ev.active;
+  if(ev.warning&&!eventWarned){eventWarned=true;sound('event');toast(`${ev.name} em 15 segundos! ${ev.type==='rush'?'Entregue 2 pizzas':'Sirva 2 receitas diferentes'} para ganhar +R$ 20 e +10 XP.`);}
+  if(ev.active&&!eventStarted){eventStarted=true;sound('event');toast(ev.name+' começou! Gorjetas +50% por 30 segundos.');}
+  $('#event').style.display=ev.warning||ev.active?'block':'none';
+  $('#event').textContent=ev.active?`${ev.name} · ${ev.remaining}s · ${ev.type==='rush'?eventServed:eventRecipes.size}/2 · ${eventPaid?'bônus recebido':'bônus R$ 20 + 10 XP'}`:`${ev.name} em ${ev.remaining}s`;
+}
+function recordEvent(recipe){
+  const ev=eventAt(time);if(!ev.active)return;
+  eventServed++;eventRecipes.add(recipe);
+  if(!eventPaid&&(ev.type==='rush'?eventServed:eventRecipes.size)>=ev.goal){eventPaid=true;state.money+=20;state.xp+=10;toast('Evento concluído! +R$ 20 · +10 XP');sound('mission');}
+}

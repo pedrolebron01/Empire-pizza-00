@@ -1,0 +1,15 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#213e35"><title>Pizza Empire — Do Balcão ao Império</title><link rel="stylesheet" href="style.css"><link rel="stylesheet" href="quiet-hud.css"><link rel="stylesheet" href="./salao.css"></head><body>
+<div id="loading"><span>PE</span><h1>Pizza Empire</h1><p>Acendendo o forno…</p></div>
+<canvas id="world" aria-label="Pizzaria 3D"></canvas>
+<header><div class="brand"><b>PE<span>✦</span></b><div>PIZZA EMPIRE<small>DO BALCÃO AO IMPÉRIO</small></div></div><div class="stats"><div><small>SEU CAIXA</small><strong id="money">R$ 0</strong></div><div class="level"><small id="level">NÍVEL 1 · APRENDIZ</small><div class="track"><i id="xp"></i></div><small id="xptext"></small></div></div><button id="pause" aria-label="Pausar">Ⅱ</button></header>
+<aside id="orders"><div class="section-title">COMANDAS <span id="count"></span></div><div id="orderlist"></div><div class="hint">Selecione uma comanda para acompanhar a receita.</div></aside>
+<aside id="mission"><small>SEU PRÓXIMO PASSO</small><h3 id="missiontitle"></h3><p id="missiondesc"></p><div class="track"><i id="missionbar"></i></div><span id="missionreward"></span><button id="missions">Ver jornada ↗</button></aside>
+<div id="event"></div><div id="combo"></div><div id="labels"></div><div id="toast" role="status"></div>
+<div id="prompt"></div><div id="work"><span></span><div class="track"><i></i></div></div>
+<footer><div class="controls"><kbd>W A S D</kbd> mover <kbd>E</kbd> interagir <kbd>SHIFT</kbd> correr</div><div id="inventory"></div><button id="upgrades">↗ Melhorar pizzaria</button></footer>
+<div id="touch"><div id="joystick"><i></i></div><button id="interact">E<small>INTERAGIR</small></button></div>
+<div id="modal" class="hidden"><section><button id="close" aria-label="Fechar">×</button><div id="modalcontent"></div></section></div>
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.180.0/examples/jsm/"}}
+</script>
+<script type="module" src="./startup.js"></script></body></html>

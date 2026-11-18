@@ -1,0 +1,9 @@
+#modal:has(.casa-menu) #modalcontent {padding:clamp(12px,3vw,32px);background:repeating-linear-gradient(90deg,#b73d31 0 32px,#fff1cf 32px 64px) top/100% 14px no-repeat,#fff6df;color:#34291f;border-radius:18px}
+.casa-menu{text-align:center;max-width:480px;margin:auto}
+.casa-menu h1{font:900 clamp(40px,7vw,76px)/.98 Georgia,serif;color:#a83426;letter-spacing:-.065em;margin:12px 0}
+.casa-menu .eyebrow{color:#39664e}.casa-menu nav{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:18px}
+.casa-menu button,.brigada button{min-height:44px;border-radius:12px;border:2px solid #775337;background:#ffe3a3;color:#38281d;box-shadow:0 3px #775337;font-weight:bold}
+.casa-menu #start{grid-column:1/-1;background:#276749;color:white;font-size:1.2rem}
+.brigada{display:grid;grid-template-columns:minmax(100px,40%) 1fr;gap:14px;align-items:center}.brigada canvas{width:100%;height:auto;background:radial-gradient(ellipse,#ffe8a3,#c87942);border-radius:18px}.brigada nav{display:flex;flex-wrap:wrap;gap:8px}.brigada button:disabled{opacity:.55}
+
+.floor-badge{position:fixed;bottom:18%;left:50%;transform:translateX(-50%);z-index:5;background:#285643;color:#fff4db;border:2px solid #f7d594;border-radius:12px;padding:.7rem 1rem}.floor-badge[hidden],body:has(#modal:not(.hidden)) .floor-badge{display:none}
