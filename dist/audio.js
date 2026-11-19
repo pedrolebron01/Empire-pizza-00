@@ -28,11 +28,12 @@ export const EFFECTS = {
   event: [[587,0,.1,'triangle'],[784,.12,.1,'triangle'],[988,.24,.16,'triangle']],
   tap: [[320,0,.08,'sine']]
 };
+const arrangements = {salon:[[60,64,67,71],[57,60,64,67],[53,57,60,64],[55,59,62,65]],menu:[[53,57,60,64],[55,59,62,65],[52,55,59,62],[57,60,64,67]],festival:[[62,66,69,73],[59,62,66,69],[55,59,62,66],[57,61,64,67]],finale:[[60,64,67,72],[64,67,71,74],[65,69,72,76],[67,71,74,77]]};
 const hz = midi => 440 * 2 ** ((midi - 69) / 12);
 export class RestaurantAudio {
   constructor(settings, factory = () => new (globalThis.AudioContext || globalThis.webkitAudioContext)()) {
     this.settings=settings; this.factory=factory; this.ctx=null;this.buffers=new Map();this.lastEffect=new Map();this.loadingSamples=false; this.step=0; this.next=0;
-    this.intense=false; this.paused=false; this.hidden=false;
+    this.arrangement='salon';this.intense=false; this.paused=false; this.hidden=false;
   }
   unlock() {
     try {
@@ -56,7 +57,8 @@ export class RestaurantAudio {
     this.music.gain.setTargetAtTime(music,t,.12);
     this.effects.gain.setTargetAtTime(effects,t,.025);
   }
-  setScene({rush=false,paused=false,hidden=false}={}) {
+  setScene({rush=false,paused=false,hidden=false,arrangement=this.arrangement}={}) {
+    this.arrangement=arrangement;
     if(this.intense!==rush){this.intense=rush;if(this.ctx)this.accent.gain.setTargetAtTime(rush?1:0,this.ctx.currentTime,1.2);}
     if(this.paused!==paused||this.hidden!==hidden){this.paused=paused;this.hidden=hidden;this.apply();}
   }
@@ -87,7 +89,7 @@ export class RestaurantAudio {
     if(!this.ctx||this.ctx.state!=='running'||this.hidden)return;
     const now=this.ctx.currentTime;
     if(this.next<now-.3)this.next=now+.03;
-    const chords=[[60,64,67,71],[57,60,64,67],[53,57,60,64],[55,59,62,65]];
+    const chords=arrangements[this.arrangement]||arrangements.salon;
     while(this.next<now+.15){
       const i=this.step%16,chord=chords[Math.floor(this.step/16)%4],t=this.next;
       // 88 BPM, eighth notes; arpeggios vary across the four-bar phrase.
@@ -99,7 +101,7 @@ export class RestaurantAudio {
       if(i%4===2)this.note(150,t,.07,'triangle',this.accent,.08);
       if(i%2===1)this.note(2400,t,.025,'triangle',this.accent,.022);
       if(i%4===0)this.note(hz(chord[2]+12),t,.22,'triangle',this.accent,.045);
-      this.step++;this.next+=60/88/2;
+      this.step++;this.next+=60/(this.arrangement==='menu'?76:this.arrangement==='festival'?106:this.intense?96:88)/2;
     }
   }
 }

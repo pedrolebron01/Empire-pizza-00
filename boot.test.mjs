@@ -59,7 +59,17 @@ try{
  await import(pathToFileURL(path.join(work,'game.js')).href);
  const tick=n=>{for(let i=0;i<n;i++){now+=100;loop(now);for(const f of shots.splice(0))f(now)}};
  const click=selector=>{const n=doc.querySelector(selector);assert.ok(n,'Controle esperado '+selector);assert.ok(!n.disabled,'Controle ativo '+selector);n.click()};
- tick(2);click('#home-salon');click('#salon-back');click('#home-chef');
+ tick(2);
+ const joystick=doc.querySelector('#joystick');
+ joystick.getBoundingClientRect=()=>({left:20,top:30,width:80,height:80});
+ joystick.setPointerCapture=id=>{joystick.captured=id};
+ joystick.hasPointerCapture=id=>joystick.captured===id;
+ joystick.onpointerdown({pointerId:1,clientX:60,clientY:70});
+ assert.equal(doc.querySelector('#joystick i').style.transform,'translate(0px,0px)');
+ joystick.onpointermove({pointerId:1,clientX:100,clientY:70});
+ assert.equal(doc.querySelector('#joystick i').style.transform,'translate(28px,0px)');
+ joystick.onpointercancel();assert.equal(doc.querySelector('#joystick i').style.transform,'');
+ click('#home-diary');assert.equal(doc.querySelectorAll('[data-relato]').length,12);doc.querySelector('[data-relato]').onclick();click('#close');click('#home-recipes');click('#close');click('#home-salon');click('#salon-back');click('#home-chef');
 for(let i=0;i<7;i++){tick(3);assert.ok(doc.querySelector('.brigada canvas'));click('#next-chef')}
  click('#prev-chef');assert.equal(doc.querySelector('.brigada h3').textContent,'Isa');click('#wear');assert.equal(JSON.parse(saved.get('pizza-empire-v1')).chef,6);
  click('#home-credits');click('#credit-back');click('#home-settings');

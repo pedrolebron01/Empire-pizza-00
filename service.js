@@ -1,12 +1,12 @@
 // Story services: authored order waves, distinct rules, no minimum-time gates.
 // 36 services × 4 waves × 5–6 pizzas = 816 directed pizzas plus management goals.
 export const STORY_CHAPTERS=[
- {name:'As primeiras fornadas',minutes:40,recipes:[0],story:'Sofia trouxe os vizinhos. Vamos conquistar a primeira mesa.'},
- {name:'A casa ganha fama',minutes:45,recipes:[0,1,2],story:'Miguel escreve sobre a casa. Cada cliente agora tem seu favorito.'},
- {name:'Uma equipe de verdade',minutes:45,recipes:[0,1,2],story:'Roberto assume o transporte. Combine suas fornadas com as viagens dele.'},
- {name:'Os sabores da cidade',minutes:50,recipes:[1,2,3,4],story:'Lia organiza encontros do bairro. A despensa e os pedidos em dupla entram em cena.'},
- {name:'O salão cheio',minutes:50,recipes:[0,2,3,4,5],story:'Clara reservou o salão. Organize balcão, equipe e pedidos prioritários.'},
- {name:'O festival da pizza',minutes:50,recipes:[0,1,2,3,4,5],story:'O bairro inteiro vem provar a casa. Cada rodada celebra um sabor aprendido.'}
+ {name:'O forno apagado',minutes:40,recipes:[0],story:'A chave veio num envelope cheio de farinha. A primeira página do livro estava debaixo da pá. Vamos reacender o forno da família.'},
+ {name:'Receitas de família',minutes:45,recipes:[0,1,2],story:'Rosa guardou a segunda página no álbum do casamento. Lembra do molho pela mancha na fotografia.'},
+ {name:'O bairro reunido',minutes:45,recipes:[0,1,2],story:'Cada mesa trouxe um pedaço da história. Eu guardei a página da massa. Tive vergonha de voltar sozinho.'},
+ {name:'Novas portas, novos sabores',minutes:50,recipes:[1,2,3,4],story:'Levamos cópias aos outros bairros. A receita da varanda voltou com uma anotação que cheira a mar.'},
+ {name:'Uma casa em vários andares',minutes:50,recipes:[0,2,3,4,5],story:'No escritório encontrei o caderno das despesas. A última compra da família foi manjericão para o terraço.'},
+ {name:'O Festival da Fortuna',minutes:50,recipes:[0,1,2,3,4,5],story:'O livro termina com uma mesa desenhada. Hoje cada vizinho assina a página que faltava.'}
 ];
 const THEMES=[
  ['Mesa dos vizinhos','Sofia','Os vizinhos pedem sabores em uma ordem combinada.','sequence'],

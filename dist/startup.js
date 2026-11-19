@@ -26,7 +26,7 @@ function fail(error) {
     button.onclick = () => location.reload();
     loading.append(button);
   }
-  console.error('Falha ao abrir Pizza Empire:', phase, error);
+  console.error('Falha ao abrir Forno & Fortuna:', phase, error);
 }
 
 function timeout(promise, ms, explanation) {
@@ -48,14 +48,8 @@ try {
     throw new Error('O navegador não disponibilizou WebGL 2, necessário para esta versão do Three.js. Confira a aceleração gráfica nas configurações do navegador e tente uma versão atual do Chrome ou Edge.');
   }
   gl.getExtension('WEBGL_lose_context')?.loseContext();
-  status('Baixando Three.js pelo CDN…');
-  try {
-    await timeout(import('three'), 15000, 'O CDN não respondeu em 15 segundos. Confira sua conexão e o acesso a cdn.jsdelivr.net.');
-  } catch (error) {
-    throw new Error('Não foi possível carregar o Three.js pelo CDN. A cena 3D depende desse download. Confira o acesso a https://cdn.jsdelivr.net/npm/three@0.180.0/build/three.module.js. Detalhe: ' + error.message);
-  }
-  status('Carregando o leitor de modelos 3D…');
-  await timeout(import('three/addons/loaders/GLTFLoader.js'), 15000, 'O leitor GLTFLoader não respondeu. Confira o acesso a cdn.jsdelivr.net.');
+  status('Carregando o motor 3D local…');
+  await timeout(import('three'),15000,'O motor 3D local não respondeu. Confira a pasta vendor.');
   status('Construindo a pizzaria…');
   await import('./game.js');
 } catch (error) {

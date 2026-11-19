@@ -1,3 +1,5 @@
+import {paginas,lerPagina} from './caderno.js';
+import {registrar} from './legado.js';
 import {circuitTask,signCircuit} from './regional.js';
 import * as T from 'three';
 const names=['Térreo','Mezanino','Terraço'];
@@ -9,7 +11,7 @@ export function buildFloors({scene,box,cyl,textSign,player,state,showModal,close
  for(const x of [-.65,.65])box(.09,2.3,.09,0x875f40,x,1.15,-.65,lift);
  textSign('ELEVADOR',1.5,.38,'#244e44','#fff3ca',0,2.3,-.62,lift);
  let path=[],autoInteract=false;
- let floor=0,destination=null,rideOrigin=null,rideTime=0;
+ let floor=state.floor||0,destination=null,rideOrigin=null,rideTime=0;
  for(let f=1;f<=2;f++){
   const room=new T.Group();rooms.push(room);scene.add(room);room.position.set(entry.x,height*f,entry.z);room.visible=false;
   const b=(w,h,d,col,x,y,z)=>box(w,h,d,col,x,y,z,room);
@@ -32,6 +34,7 @@ export function buildFloors({scene,box,cyl,textSign,player,state,showModal,close
    textSign('ESCRITÓRIO',1.65,.35,'#45645a','#fff3c6',4,1.52,-2.04,room);
   }
  }
+ if(floor){player.g.position.set(entry.x,height*floor,entry.z);lift.position.y=height*floor;rooms.forEach((r,i)=>r.visible=i+1===floor);}
  const badge=document.createElement('button');badge.className='floor-badge';badge.hidden=true;document.body.append(badge);
  const near=(x,z,r)=>Math.hypot(player.g.position.x-entry.x-x,player.g.position.z-entry.z-z)<r;
  const nearLift=()=>near(0,0,1.25),desk=()=>floor&&near(4,-1.8,1.75);
@@ -49,12 +52,13 @@ export function buildFloors({scene,box,cyl,textSign,player,state,showModal,close
    return;
   }
   if(floor===1){
-   showModal('<h2>Escritório da casa</h2><p>Consulte as metas ou troque de avental. A bandeja precisa estar vazia para a troca.</p><button id="floor-goals">Abrir livro de metas</button><button id="floor-closet">Escolher pizzaiolo</button>');
+   showModal('<h2>Escritório da casa</h2><p>Consulte as metas ou troque de avental. A bandeja precisa estar vazia para a troca.</p><h3>Arquivo da família</h3>'+paginas.slice(0,Math.min(6,1+Math.floor(state.service.index/6))).map((p,i)=>'<button data-pagina="'+i+'">'+(state.paginas.includes(i)?'✓ ':'')+p[0]+'</button>').join(' ')+'<p></p><button id="floor-goals">Abrir livro de metas</button><button id="floor-closet">Escolher pizzaiolo</button>');
+   document.querySelectorAll('[data-pagina]').forEach(b=>b.onclick=()=>lerPagina(state,showModal,save,useDesk,+b.dataset.pagina));
    document.querySelector('#floor-goals').onclick=showMissions;document.querySelector('#floor-closet').onclick=()=>showChefs(state.chef);return;
   }
   const left=Math.max(0,4-(state.served-state.lastHarvest)),full=state.stock[5]>=999;
   showModal('<h2>Horta do terraço</h2><p>Colha uma porção da mistura de ervas da Especial da casa. A próxima colheita amadurece a cada quatro entregas.</p><button id="floor-harvest" '+(left||full?'disabled':'')+'>'+(full?'Estoque cheio':left?'Faltam '+left+' entregas':'Colher ervas · +1 porção')+'</button><button id="floor-stock">Abrir estoque</button>');
-  document.querySelector('#floor-stock').onclick=showStock;document.querySelector('#floor-harvest').onclick=()=>{if(state.served-state.lastHarvest<4||state.stock[5]>=999)return;state.stock[5]++;state.lastHarvest=state.served;save();closeModal();toast('Ervas colhidas · +1 porção para a Especial da casa.')};
+  document.querySelector('#floor-stock').onclick=showStock;document.querySelector('#floor-harvest').onclick=()=>{if(state.served-state.lastHarvest<4||state.stock[5]>=999)return;registrar(state,"harvest");state.stock[5]++;state.lastHarvest=state.served;save();closeModal();toast('Ervas colhidas · +1 porção para a Especial da casa.')};
  }
  function interact(){if(destination!==null)return true;if(nearLift()){choose();return true}if(desk()){useDesk();return true}return !!floor}
  function valid(x,z){return x>=-1.62&&x<=5.62&&z>=-2.62&&z<=2.62&&!furniture[floor].some(o=>Math.abs(x-o.x)<o.w/2+.23&&Math.abs(z-o.z)<o.d/2+.23)}
@@ -85,7 +89,7 @@ export function buildFloors({scene,box,cyl,textSign,player,state,showModal,close
    p.x=rideOrigin.x+(entry.x-rideOrigin.x)*Math.min(1,rideTime/.32);p.z=rideOrigin.z+(entry.z-rideOrigin.z)*Math.min(1,rideTime/.32);
    p.y=rideOrigin.y+(height*destination-rideOrigin.y)*ease;lift.position.y=p.y;animate(player,dt,false);
    rooms.forEach((r,i)=>r.visible=destination===i+1||floor===i+1);
-   if(t===1){floor=destination;destination=null;rooms.forEach((r,i)=>r.visible=floor===i+1)}
+   if(t===1){floor=destination;state.floor=floor;save();destination=null;rooms.forEach((r,i)=>r.visible=floor===i+1)}
   }else if(floor){
    let x=Number(!!(keys.d||keys.arrowright))-Number(!!(keys.a||keys.arrowleft))+stick.x;
    let z=Number(!!(keys.s||keys.arrowdown))-Number(!!(keys.w||keys.arrowup))+stick.y;

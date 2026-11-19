@@ -31,3 +31,15 @@ body:not(.playing) #modalcontent .poster-type h1{font-family:Georgia,serif;font-
 #modal:has(.salon-window){background:transparent!important;backdrop-filter:none;align-items:flex-end}
 #modal:has(.salon-window)>section{width:auto;min-width:0;margin:12px;background:#13382cea;padding:10px 20px}
 #modal:has(.salon-window) #modalcontent{background:none;padding:0}.salon-window{display:flex;flex-wrap:wrap;align-items:center;gap:12px}.salon-window h2{color:#fff0c8!important;font-size:1.4rem!important;margin:0!important}
+
+.poster-type h1 br{display:block}.poster-type h1 em{margin:0;color:#ffcd57}
+#modalcontent .casa-menu nav #start{color:#fff9e8}
+#modalcontent .casa-menu nav button:active{transform:translateY(2px);border-bottom-width:2px}
+#modalcontent blockquote{border-left:4px solid #d49729;margin:1em 0;padding:.6em 1em;background:#fff1cd;color:#483020}
+@media(max-width:700px){body:not(.playing) #modalcontent .poster-type h1{font-size:clamp(2.2rem,9vw,4rem)}.poster-type h1 br{display:none}.poster-type h1 em{margin-left:.2em}}
+
+#modal:has(.casa-menu)>section{background:transparent}
+.menu-service{background-color:#fff0c6}
+.menu-poster{background:transparent}
+.menu-poster img{mask-image:linear-gradient(18deg,#000 23%,#000c 46%,transparent 78%)}
+@media(prefers-reduced-motion:no-preference){.casa-menu nav button{transition:transform .12s,background-color .12s}}

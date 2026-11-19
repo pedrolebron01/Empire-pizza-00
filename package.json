@@ -5,6 +5,6 @@
   "scripts": {
     "start": "node server.mjs",
     "setup": "python setup.py",
-    "test": "node tests.mjs && node counter.test.mjs && node enhancements.test.mjs && node game-integration.test.mjs && node campaign.test.mjs && node service.test.mjs && node freedom.test.mjs && node management.test.mjs && node actor-world.test.mjs && node boot.test.mjs"
+    "test": "node tests.mjs && node counter.test.mjs && node enhancements.test.mjs && node game-integration.test.mjs && node campaign.test.mjs && node service.test.mjs && node freedom.test.mjs && node management.test.mjs && node actor-world.test.mjs && node boot.test.mjs && node legado.test.mjs"
   }
 }

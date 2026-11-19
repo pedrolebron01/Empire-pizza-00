@@ -1,4 +1,5 @@
 export const TEAM = {
+  cleaner: {name:"Zilda",job:"Limpeza do salão",intro:"Deixe as mesas comigo. Sempre cabe mais um!",at:4,costs:[55,90,130],describe:n=>"Libera a próxima mesa "+(2*n)+" segundos mais cedo após a saída de cada cliente."},
   cook: {name:'Jana', job:'Bancada', intro:'Se há comanda na fila, já deixo a próxima massa aberta.', at:6, costs:[75,110,150], describe:n=>'Monta uma pizza dos três sabores básicos para uma comanda em '+(16-3*n)+' s. Retire na bancada com a bandeja livre.'},
   courier: {name:'Zeca', job:'Retirada', intro:'Conheço a freguesia pelo nome que vai escrito na caixa.', at:12, costs:[95,125,160], describe:n=>'Leva a pizza do balcão ao cliente das encomendas do caderno. Velocidade de '+(1.6+.4*n).toFixed(1)+' m/s.'},
   host: {name:'Malu', job:'Recepção', intro:'Guardo um lugar à sombra para quem espera.', at:3, costs:[55,85,120], describe:n=>'Recebe cada mesa na entrada e oferece '+(12*n)+' segundos extras de paciência.'},
@@ -18,7 +19,7 @@ export const BOOKINGS = [
 function integer(value,max,otherwise=0){return Number.isInteger(value)&&value>=0?Math.min(value,max):otherwise;}
 export function restoreOffice(value){
  const page=integer(value?.page,BOOKINGS.length);
- return {cook:integer(value?.cook,3),courier:integer(value?.courier,3),cup:{active:value?.cup?.active===true,score:integer(value?.cup?.score,9999),
+ return {cleaner:integer(value?.cleaner,3),cook:integer(value?.cook,3),courier:integer(value?.courier,3),cup:{active:value?.cup?.active===true,score:integer(value?.cup?.score,9999),
    played:integer(value?.cup?.played,11),best:integer(value?.cup?.best,9999),
    last:integer(value?.cup?.last,5,-1)},layout:value?.layout===1?1:0,coupons:integer(value?.coupons,5),host:integer(value?.host,3),buyer:integer(value?.buyer,3),page,
    stamp:page<BOOKINGS.length?integer(value?.stamp,BOOKINGS[page].recipes.length-1):0,

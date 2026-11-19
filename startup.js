@@ -26,7 +26,7 @@ function fail(error) {
     button.onclick = () => location.reload();
     loading.append(button);
   }
-  console.error('Falha ao abrir Pizza Empire:', phase, error);
+  console.error('Falha ao abrir Forno & Fortuna:', phase, error);
 }
 
 function timeout(promise, ms, explanation) {

@@ -1,0 +1,31 @@
+/* Cartaz da casa e ficha de serviço */
+body:not(.playing) > header,body:not(.playing) > footer {visibility:hidden}
+#modal:has(.casa-menu){background:linear-gradient(100deg,#192d2acf,#17282152)!important;backdrop-filter:none}
+#modal:has(.casa-menu)>section{width:min(950px,93vw);max-width:950px;max-height:94dvh;border:1px solid #ffedc9;border-radius:20px;padding:0;overflow:auto;box-shadow:0 20px 85px #101e23a8;background:#fff1d0}
+#modal:has(.casa-menu) #modalcontent{padding:0;background:none}
+#modalcontent .casa-menu{display:grid;grid-template-columns:1.15fr 1fr;max-width:none;text-align:left;margin:0}
+.menu-poster{position:relative;isolation:isolate;min-height:490px;overflow:hidden;background:#584633}
+.menu-poster img{width:100%;height:100%;position:absolute;object-fit:cover;object-position:54% 40%;z-index:-2}
+.menu-poster:after{content:'';position:absolute;inset:30% 0 0;background:linear-gradient(0deg,#172d26fa,transparent);z-index:-1}
+.poster-type{position:absolute;bottom:7%;left:8%}
+.poster-type span,.menu-place{font:800 .72rem/1.5 system-ui;text-transform:uppercase;letter-spacing:.14em}
+.poster-type span{color:#ffdf9b}
+body:not(.playing) #modalcontent .poster-type h1{font:900 clamp(4rem,6.8vw,6.4rem)/.75 Georgia,serif;color:#fff3cf;letter-spacing:-.075em;margin:.18em 0 0;text-shadow:2px 3px #693723}
+.poster-type h1 em{color:#ffb457;font-weight:900}
+.menu-service{padding:clamp(24px,3vw,46px);align-self:center;color:#382a22}
+.menu-place{display:flex;gap:10px;align-items:center;color:#3c634c}.menu-place i{font-size:1.25rem;color:#ad3927}
+#modalcontent .menu-service h2{font:800 clamp(2rem,3.4vw,3.6rem)/.98 Georgia,serif;letter-spacing:-.055em;color:#3c3024;margin:18px 0 8px}
+#modalcontent .menu-service p{color:#655545;margin:0 0 22px;font-size:.91rem}
+#modalcontent .casa-menu nav{display:grid;grid-template-columns:1fr;gap:9px}
+#modalcontent .casa-menu nav button{display:flex;justify-content:space-between;align-items:center;padding:11px 18px;margin:0;width:100%;border-radius:9px;border:1px solid #b4a07b;border-bottom-width:3px;background:#fff9e9;color:#342f23;box-shadow:none;text-align:left;font:700 1rem/1.3 system-ui}
+#modalcontent .casa-menu nav button:hover{background:#ffdf9d}
+#modalcontent .casa-menu nav #start{color:white;background:#a93823;border-color:#722719;font-size:1.14rem;min-height:52px}
+#modalcontent .casa-menu nav small{color:#795e38;font-size:.75rem}
+.menu-foot{display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-top:1px dashed #b8a886;margin-top:22px}
+#modalcontent .menu-foot button{padding:4px 0;color:#485c49;font-size:.8rem;background:transparent;box-shadow:none;border:0;text-decoration:underline;text-underline-offset:4px}
+#loading{background:#16372d;color:#fff3d5}
+body.playing #world{animation:oven-open .32s ease-out}@keyframes oven-open{from{filter:brightness(.7)}to{filter:none}}
+@media(max-width:700px){#modalcontent .casa-menu{grid-template-columns:1fr}.menu-poster{min-height:175px;max-height:25vh}.menu-poster img{object-position:50% 45%}.poster-type{bottom:12%;left:6%}body:not(.playing) #modalcontent .poster-type h1{font-size:3.5rem}.poster-type br{display:none}.poster-type h1 em{margin-left:.12em}.menu-service{padding:16px 22px}.menu-place{font-size:.65rem}#modalcontent .menu-service h2{margin-top:5px}#modalcontent .menu-service p{margin-bottom:9px}.menu-foot{margin-top:10px}}
+@media(prefers-reduced-motion:reduce){body.playing #world{animation:none}}
+body:has(#service-hud) .illustration img{object-fit:contain}
+

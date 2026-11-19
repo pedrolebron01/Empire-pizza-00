@@ -1,4 +1,6 @@
-# Pizza Empire — Do Balcão ao Império
+# Forno & Fortuna: O Legado da Pizzaria
+
+Consulte [a apresentação atualizada](APRESENTACAO.md) e os [créditos](CREDITOS.md).
 
 ## Liberdade para jogar
 
@@ -18,25 +20,13 @@ Abra `JOGAR.bat` e acesse **http://localhost:4173**. Requer Node.js ou Bun. Tamb
 
 **Não abra index.html diretamente pelo protocolo file://.** Os módulos e modelos precisam de um servidor HTTP.
 
-## Instalar os recursos locais
+## Recursos locais
 
-Execute, com Python 3.9+ e acesso à internet:
-
-```console
-python setup.py
-```
-
-Esse comando baixa Three.js 0.180.0, GLTFLoader, BufferGeometryUtils e o arquivo oficial Kenney Food Kit. Extrai o pacote dentro de `assets/food/`, verifica os nomes reais dos arquivos GLB/glTF e gera `assets/models.json`. O jogo só seleciona modelos existentes nesse inventário. A pizza real é carregada por GLTFLoader e normalizada à escala do jogo.
-
-**Three.js via CDN:** o jogo carrega Three.js 0.180.0 e GLTFLoader diretamente do jsDelivr usando um import map. Não é necessário instalar Three.js, npm ou executar setup.py para abrir o jogo. É necessária conexão à internet e acesso HTTPS a `cdn.jsdelivr.net`.
-
-`setup.py` continua disponível para baixar o pacote Kenney e gerar o inventário local de modelos. Ele também baixa uma cópia do Three.js, mas a configuração atual da página usa o CDN.
-
-**Limitação de verificação:** os downloads pelo terminal do ambiente de implementação foram bloqueados pelo proxy. Os binários Kenney não estão incluídos; até instalar o pacote, o jogo usa pizzas procedurais. A renderização e o ciclo completo no navegador ainda precisam de validação. Não houve publicação online.
+A página carrega Three.js de vendor/three.module.js. O inventário de modelos desta distribuição está vazio e as pizzas são procedurais. O jogo abre com os recursos locais.
 
 ## Primeiro pedido
 
-1. Clique em **Abrir as portas**.
+1. Clique em **Novo jogo** ou **Continuar**.
 2. Ande com **WASD** ou **setas** até **01 · Massa** e pressione **E**.
 3. Vá à **02 · Preparo**, pressione **E** e escolha **Muçarela**. Aguarde a montagem.
 4. Na **03 · Forno**, pressione **E**, espere 10 segundos e pressione **E** novamente para retirar.

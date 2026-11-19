@@ -1,3 +1,4 @@
+import {proximoRelato} from './legado.js';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
@@ -70,6 +71,7 @@ assert.equal(context.state.guideEnabled,false);assert.equal(context.tutorial.act
 assert.equal(context.state.tutorialProgress.skipped,true);
 
 // The actual HUD and preference handlers expose the player's choices.
+context.proximoRelato=proximoRelato;
 context.serviceProgress=()=>({title:'Próximo serviço',count:0,goal:20});
 context.currentService=()=>({chapter:0,mode:'sequence'});
 context.eventAt=()=>({active:false,warning:false});context.toastTime=0;context.time=0;context.nearest=null;context.guideStation='dough';
